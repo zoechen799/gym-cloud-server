@@ -1,0 +1,9 @@
+spring:
+  datasource:
+    data: classpath:data.sql
+    initialization-mode: always
+    sql-script-encoding: utf-8
+
+feign:
+  hystrix:
+    enabled: true
