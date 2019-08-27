@@ -1,0 +1,16 @@
+spring:
+  application:
+    name: wechat-service
+  cloud:
+    config:
+      uri: http://127.0.0.1:7005
+      fail-fast: true
+      password: ${CONFIG_SERVICE_PASSWORD}
+      username: user
+
+swagger:
+  enabled: true
+
+wechat:
+  app-id: wxbd94b0e160232ef8
+  app-secret: bb35a62d48e142b9f9a9a820121a5bea
