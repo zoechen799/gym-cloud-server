@@ -24,7 +24,7 @@ public class Role {
 
   private String role;
 
-  @ManyToMany(mappedBy = "role")
+  @ManyToMany(mappedBy = "roles")
   private List<User> userList;
 
   @Override

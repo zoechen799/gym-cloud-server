@@ -18,6 +18,7 @@ import org.springframework.context.annotation.ComponentScan;
 @EnableDiscoveryClient
 @EnableZuulProxy
 @ComponentScan("com.yiibo.gym.gateway.config")
+@ComponentScan("com.yiibo.gym.gateway.security.jwt")
 public class GatewayApplication {
 
   public static void main(String[] args) {

@@ -1,12 +1,17 @@
 package com.yiibo.gym.gateway.model;
 
 import lombok.Data;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * ClassName: User
@@ -18,7 +23,7 @@ import java.util.Set;
  */
 @Data
 @Entity
-public class User {
+public class User implements UserDetails {
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
   private long id;
@@ -40,6 +45,26 @@ public class User {
 
   @ManyToMany(cascade = CascadeType.REMOVE,fetch = FetchType.LAZY)
   @JoinTable(name = "user_role",joinColumns = @JoinColumn(name="user_id",referencedColumnName = "id"),inverseJoinColumns = @JoinColumn(name = "role_id",referencedColumnName = "id"))
-  private List<Role> role;
+  private List<Role> roles;
 
+  @Override
+  public Collection<? extends GrantedAuthority> getAuthorities() {
+    return this.roles.stream().map(role -> new SimpleGrantedAuthority(role.getRole()))
+        .collect(Collectors.toList());
+  }
+
+  @Override
+  public boolean isAccountNonExpired() {
+    return false;
+  }
+
+  @Override
+  public boolean isAccountNonLocked() {
+    return false;
+  }
+
+  @Override
+  public boolean isCredentialsNonExpired() {
+    return false;
+  }
 }
