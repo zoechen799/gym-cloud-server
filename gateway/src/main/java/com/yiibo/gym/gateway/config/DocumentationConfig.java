@@ -22,6 +22,7 @@ public class DocumentationConfig implements SwaggerResourcesProvider{
   @Override
   public List<SwaggerResource> get() {
     List resources = new ArrayList<>();
+    resources.add(swaggerResource("认证服务", "/v2/api-docs", "1.0"));
     resources.add(swaggerResource("课程服务", "/course/v2/api-docs", "1.0"));
     resources.add(swaggerResource("微信服务", "/wechat/v2/api-docs", "1.0"));
     return resources;

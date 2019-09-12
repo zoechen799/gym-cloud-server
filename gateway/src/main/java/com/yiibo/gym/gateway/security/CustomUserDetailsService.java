@@ -24,7 +24,13 @@ public class CustomUserDetailsService implements UserDetailsService{
 
   @Override
   public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-    return this.users.findByUsername(username)
-        .orElseThrow(() -> new UsernameNotFoundException("Username: " + username + " not found"));
+//    UserDetails user = this.users.findByUsername(username)
+//        .orElseThrow(() -> new UsernameNotFoundException("Username: " + username + " not found"));
+//    return user;
+    if(this.users.findByUsername(username).isPresent()){
+      return this.users.findByUsername(username).get();
+    }else{
+      throw new UsernameNotFoundException("Username: " + username + " not found");
+    }
   }
 }

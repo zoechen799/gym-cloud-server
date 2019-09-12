@@ -10,6 +10,8 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.crypto.password.NoOpPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 /**
  * ClassName: SecurityConfig
@@ -19,6 +21,7 @@ import org.springframework.security.config.http.SessionCreationPolicy;
  * @author zihan.chen
  *         Copyright (c) 2019. yiibo.com All Rights Reserved.
  */
+@SuppressWarnings("SpringJavaAutowiringInspection")
 @Configuration
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
   @Autowired
@@ -30,6 +33,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     return super.authenticationManagerBean();
   }
 
+  @Bean
+  PasswordEncoder passwordEncoder(){
+    return NoOpPasswordEncoder.getInstance();
+  }
+
+
   @Override
   protected void configure(HttpSecurity http) throws Exception {
     //@formatter:off
@@ -39,7 +48,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
         .and()
         .authorizeRequests()
-        .antMatchers("/auth/**").permitAll()
+        .antMatchers(HttpMethod.POST,
+            "/auth/signin",
+            "/auth/register").permitAll()
         .antMatchers(
             HttpMethod.GET,
             "/v2/api-docs",

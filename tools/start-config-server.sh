@@ -1,2 +1,2 @@
 cd ../config
-mvn spring-boot:run
+mvn org.springframework.boot:spring-boot-maven-plugin:run
